@@ -1,0 +1,103 @@
+version: '3.8'
+
+services:
+  # Redis
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - ride-network
+
+  # Auth Service
+  auth:
+    build: ./auth
+    container_name: auth
+    ports:
+      - "5001:5001"
+    environment:
+      - SECRET=mysecretkey
+    networks:
+      - ride-network
+
+  # Rider Service
+  rider:
+    build: ./rider
+    container_name: rider
+    ports:
+      - "5002:5002"
+    environment:
+      - GATEWAY_URL=http://gateway:8000
+    networks:
+      - ride-network
+
+  # Driver Service
+  driver:
+    build: ./driver
+    container_name: driver
+    ports:
+      - "5003:5003"
+    environment:
+      - GATEWAY_URL=http://gateway:8000
+    networks:
+      - ride-network
+
+  # Matching Service
+  matching:
+    build: ./matching
+    container_name: matching
+    ports:
+      - "5004:5004"
+    environment:
+      - GATEWAY_URL=http://gateway:8000
+    networks:
+      - ride-network
+
+  # Trip Service
+  trip:
+    build: ./trip
+    container_name: trip
+    ports:
+      - "5005:5005"
+    networks:
+      - ride-network
+
+  # Payment Service
+  payment:
+    build: ./payment
+    container_name: payment
+    ports:
+      - "5006:5006"
+    networks:
+      - ride-network
+
+  # Geo Service
+  geo:
+    build: ./geo
+    container_name: geo
+    ports:
+      - "5007:5007"
+    networks:
+      - ride-network
+
+  # API Gateway
+  gateway:
+    build: ./gateway
+    container_name: gateway
+    ports:
+      - "8000:8000"
+    environment:
+      - AUTH_URL=http://auth:5001
+      - RIDER_URL=http://rider:5002
+      - DRIVER_URL=http://driver:5003
+      - MATCHING_URL=http://matching:5004
+      - TRIP_URL=http://trip:5005
+      - PAYMENT_URL=http://payment:5006
+      - GEO_URL=http://geo:5007
+    networks:
+      - ride-network
+
+networks:
+  ride-network:
+    driver: bridge
