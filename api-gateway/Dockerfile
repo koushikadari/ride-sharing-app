@@ -1,11 +1,14 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY api-gateway/requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
+COPY api-gateway .
+
+COPY shared /app/shared
 
 EXPOSE 8000
 
