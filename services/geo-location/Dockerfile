@@ -1,12 +1,14 @@
-FROM python:3.9-slim
+FROM python:3.11-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY services/geo-location/requirements.txt .
+
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY . .
-COPY ../shared /app/shared
+COPY services/geo-location .
+
+COPY shared /app/shared
 
 EXPOSE 5007
 
