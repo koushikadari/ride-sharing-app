@@ -12,7 +12,7 @@ services:
 
   # Auth Service
   auth:
-    build: ./auth
+    build: ./services/auth
     container_name: auth
     ports:
       - "5001:5001"
@@ -23,7 +23,7 @@ services:
 
   # Rider Service
   rider:
-    build: ./rider
+    build: ./services/rider
     container_name: rider
     ports:
       - "5002:5002"
@@ -34,7 +34,7 @@ services:
 
   # Driver Service
   driver:
-    build: ./driver
+    build: ./services/driver
     container_name: driver
     ports:
       - "5003:5003"
@@ -45,7 +45,7 @@ services:
 
   # Matching Service
   matching:
-    build: ./matching
+    build: ./services/matching
     container_name: matching
     ports:
       - "5004:5004"
@@ -56,7 +56,7 @@ services:
 
   # Trip Service
   trip:
-    build: ./trip
+    build: ./services/trip
     container_name: trip
     ports:
       - "5005:5005"
@@ -65,7 +65,7 @@ services:
 
   # Payment Service
   payment:
-    build: ./payment
+    build: ./services/payment
     container_name: payment
     ports:
       - "5006:5006"
@@ -74,7 +74,7 @@ services:
 
   # Geo Service
   geo:
-    build: ./geo
+    build: ./services/geo
     container_name: geo
     ports:
       - "5007:5007"
@@ -83,7 +83,7 @@ services:
 
   # API Gateway
   gateway:
-    build: ./gateway
+    build: ./api-gateway
     container_name: gateway
     ports:
       - "8000:8000"
