@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+
   # Redis
   redis:
     image: redis:alpine
@@ -10,6 +11,7 @@ services:
     networks:
       - ride-network
 
+
   # Auth Service
   auth:
     build: ./services/auth
@@ -18,8 +20,11 @@ services:
       - "5001:5001"
     environment:
       - SECRET=mysecretkey
+    depends_on:
+      - redis
     networks:
       - ride-network
+
 
   # Rider Service
   rider:
@@ -29,8 +34,11 @@ services:
       - "5002:5002"
     environment:
       - GATEWAY_URL=http://gateway:8000
+    depends_on:
+      - auth
     networks:
       - ride-network
+
 
   # Driver Service
   driver:
@@ -40,8 +48,11 @@ services:
       - "5003:5003"
     environment:
       - GATEWAY_URL=http://gateway:8000
+    depends_on:
+      - auth
     networks:
       - ride-network
+
 
   # Matching Service
   matching:
@@ -51,8 +62,12 @@ services:
       - "5004:5004"
     environment:
       - GATEWAY_URL=http://gateway:8000
+    depends_on:
+      - rider
+      - driver
     networks:
       - ride-network
+
 
   # Trip Service
   trip:
@@ -60,8 +75,11 @@ services:
     container_name: trip
     ports:
       - "5005:5005"
+    depends_on:
+      - matching
     networks:
       - ride-network
+
 
   # Payment Service
   payment:
@@ -69,17 +87,21 @@ services:
     container_name: payment
     ports:
       - "5006:5006"
+    depends_on:
+      - trip
     networks:
       - ride-network
 
-  # Geo Service
+
+  # Geo Location Service
   geo:
-    build: ./services/geo
+    build: ./services/geo-location
     container_name: geo
     ports:
       - "5007:5007"
     networks:
       - ride-network
+
 
   # API Gateway
   gateway:
@@ -95,8 +117,17 @@ services:
       - TRIP_URL=http://trip:5005
       - PAYMENT_URL=http://payment:5006
       - GEO_URL=http://geo:5007
+    depends_on:
+      - auth
+      - rider
+      - driver
+      - matching
+      - trip
+      - payment
+      - geo
     networks:
       - ride-network
+
 
 networks:
   ride-network:
