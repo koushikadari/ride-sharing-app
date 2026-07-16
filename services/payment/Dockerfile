@@ -1,14 +1,12 @@
-FROM python:3.11-slim
+FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY services/payment/requirements.txt .
+COPY requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY services/payment .
-
-COPY shared /app/shared
+COPY .
 
 EXPOSE 5006
 
