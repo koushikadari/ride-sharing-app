@@ -10,6 +10,6 @@ COPY geo-location/ .
 
 COPY shared/ ./shared/
 
-EXPOSE 5004
+EXPOSE 5007
 
 CMD ["python", "app.py"]
