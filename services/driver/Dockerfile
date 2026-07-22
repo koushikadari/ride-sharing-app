@@ -10,6 +10,6 @@ COPY driver/ .
 
 COPY shared/ ./shared/
 
-EXPOSE 5007
+EXPOSE 5003
 
 CMD ["python", "app.py"]
