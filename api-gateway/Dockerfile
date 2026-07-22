@@ -6,9 +6,9 @@ COPY api-gateway/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY api-gateway .
+COPY api-gateway/ .
 
-COPY shared /app/shared
+COPY services/shared/ ./shared/
 
 EXPOSE 8000
 
