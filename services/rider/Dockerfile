@@ -2,11 +2,13 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY requirements.txt .
+COPY rider/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY .
+COPY rider/ .
+
+COPY shared/ ./shared/
 
 EXPOSE 5002
 
