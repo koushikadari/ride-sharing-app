@@ -2,11 +2,11 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY geo-location/requirements.txt .
+COPY services/geo-location/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY geo-location/ .
+COPY services/geo-location/ .
 
 COPY shared/ ./shared/
 
