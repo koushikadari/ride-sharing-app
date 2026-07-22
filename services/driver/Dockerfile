@@ -2,14 +2,14 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY rider/requirements.txt .
+COPY driver/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY rider/ .
+COPY driver/ .
 
 COPY shared/ ./shared/
 
-EXPOSE 5003
+EXPOSE 5007
 
 CMD ["python", "app.py"]
