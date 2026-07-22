@@ -2,11 +2,11 @@ FROM python:3.9-slim
 
 WORKDIR /app
 
-COPY trip/requirements.txt .
+COPY services/trip/requirements.txt .
 
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY trip/ .
+COPY services/trip/ .
 
 COPY shared/ ./shared/
 
